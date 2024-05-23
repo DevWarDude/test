@@ -186,8 +186,14 @@ body {
   padding-left: 9px;
 }
 
-.product-cont .products  .product .cp h2 {
+.product-cont .products  .product .cp span {
   margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 
 .product-cont .products  .product img {
@@ -225,7 +231,15 @@ body {
 }
 
 .border:nth-child(2) {
-  margin-bottom: 400px;
+  margin-bottom: 40px;
+}
+
+.more-product {
+  color: rgb(253, 237, 18);
+  text-align: center;
+  margin-bottom: 18px;
+  margin-top: -15px;
+  display: block;
 }
 
 .payment-method {
