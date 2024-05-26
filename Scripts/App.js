@@ -1,4 +1,4 @@
-import { products } from "../Datas/Products.js";
+import { products } from "../Datas/shop-now.js";
 import { paymentMethod } from "../Datas/Payment-methods.js";
 
 export let cart = JSON.parse(localStorage.getItem('ok')) || [];

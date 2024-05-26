@@ -1,0 +1,89 @@
+
+.product-cont {
+  margin-top: -70px;
+}
+
+.product-cont .products {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 18px;
+  gap: 15px 9px;
+  margin-bottom: 20px;
+}
+
+.product-cont .products a {
+  text-decoration: none;
+}
+
+.product-cont .products .product {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  border: 2px solid rgb(125, 125, 125);
+  align-items: center;
+  height: 200px;
+  justify-content: space-between;
+  padding-top: 15px;
+  background-color: rgb(39, 9, 65);
+  height: fit-content;
+  border-radius: 5px;
+  background-color: transparent;
+}
+
+.product-cont .products .product:nth-child(5), .product-cont .products .product:nth-child(6), .product-cont .products .product:nth-child(7), .product-cont .products .product:nth-child(8) {
+  /* background-color: transparent; */
+}
+
+.product-cont .products  .product .cp{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-left: 9px;
+}
+
+.product-cont .products  .product .cp span {
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.product-cont .products  .product img {
+  width: 95%;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  margin-top: 10px;
+  object-fit: cover;
+  height: 130px;
+}
+
+.product-cont .products  .product .price {
+  background-color: #7E5AB1;
+  background-color: rgb(236, 226, 97);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 12px;
+  color: black;
+}
+
+/* .product-cont .products .product:nth-child(5) .price, .product-cont .products .product:nth-child(6) .price, .product-cont .products .product:nth-child(7) .price, .product-cont .products .product:nth-child(8) .price {
+  background-color: rgb(236, 226, 97);
+  color: black;
+  padding: 10px;
+  font-weight: 400; 
+}*/
+
+
+.product-cont .products  .product .price span:first-child {
+  text-decoration: line-through;
+}
+
+.product-cont .products  .product .price span:last-child {
+  font-weight: 600;
+  font-size: 1.15rem;
+}
