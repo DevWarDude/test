@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { supabase } from "../service/supabase";
 import ErrorComponent from "../components/ErrorComponent";
@@ -31,6 +31,7 @@ async function signUp({ email, password, username }) {
 
 function SignUp() {
   const [isOnline] = useState(navigator.onLine);
+  const queryClient = useQueryClient();
 
   const {
     register,
@@ -50,6 +51,7 @@ function SignUp() {
   } = useMutation({
     mutationFn: signUp,
     onSuccess: async () => {
+      await queryClient.invalidateQueries(["currentUser"]);
       toast.success("Sign up was successful");
     },
     onError: (err) => toast.error(err.message || "Signup failed"),

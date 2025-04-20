@@ -45,7 +45,7 @@ function Header({ setCollapsed, collapsed }) {
           <Bell size={20} />
         </button>
         <button className="overflow-hidden rounded-full bg-blue-100 px-3 py-1 text-lg font-semibold text-slate-600 dark:bg-slate-200">
-          {(user?.profile?.username).charAt(0)}
+          {user?.profile?.username && user.profile.username.charAt(0)}
         </button>
       </div>
     </header>
