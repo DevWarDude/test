@@ -11,7 +11,7 @@ export default function Logout({ children, collapsed }) {
 
   return (
     <div
-      className={`sidebar-item cursor-pointer ${collapsed && "md:w-[45px]"}`}
+      className={`sidebar-item flex cursor-pointer items-start ${collapsed && "md:mx-2 md:w-[50px]"}`}
       onClick={handleLogout}
     >
       {children}

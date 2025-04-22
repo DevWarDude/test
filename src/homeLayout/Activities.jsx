@@ -3,7 +3,10 @@ import { activies } from "../data/activites";
 
 export default function Activities() {
   return (
-    <div className="mx-2 mt-24 flex flex-col gap-5" id="activities">
+    <div
+      className="mx-2 mt-24 flex flex-col gap-5 md:mx-5 md:grid md:grid-cols-2 lg:grid-cols-3"
+      id="activities"
+    >
       {activies.map((activity, index) => {
         return (
           <div

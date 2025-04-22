@@ -13,7 +13,7 @@ function Wallet() {
       <h1 className="px-5 text-center text-3xl font-bold">Connect Wallet</h1>
       <div className="flex flex-col items-center justify-between px-3 py-5">
         <div className="flex w-[100%] items-center justify-between p-4">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 md:mx-20">
             <img
               src={`../${currentWallet.img}`}
               className="h-[44px] rounded-lg"
@@ -27,6 +27,7 @@ function Wallet() {
             onClick={() => setCurrentWallet(null)}
             size={23}
             color="grey"
+            className="cursor-pointer"
           />
         </div>
         <PopupForm

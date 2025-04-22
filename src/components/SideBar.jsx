@@ -58,7 +58,7 @@ export const SideBar = forwardRef(({ collapsed, setCollapsed }, ref) => {
 
       <Logout collapsed={collapsed}>
         <MdLogout size={22} className="flex-shrink-0" />
-        <p className="whitespace-nowrap">Logout</p>
+        {!collapsed && <p className="whitespace-nowrap">Logout</p>}
       </Logout>
     </aside>
   );

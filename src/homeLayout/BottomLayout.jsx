@@ -1,6 +1,6 @@
 function BottomLayout() {
   return (
-    <div className="mt-28 flex flex-col gap-5 px-2">
+    <div className="mt-28 flex flex-col gap-5 px-2 sm:mx-24 md:mx-28">
       <div className="flex flex-col items-center justify-center gap-5">
         <div className="font-poppins text-2xl font-semibold tracking-wide">
           The most efficient solution provider in the{" "}

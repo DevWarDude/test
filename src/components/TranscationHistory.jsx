@@ -98,17 +98,17 @@ const TransactionHistory = () => {
               value={searchQuery}
               onChange={(e) => {
                 setSearchQuery(e.target.value);
-                setCurrentPage(1); // Reset to page 1 when searching
+                setCurrentPage(1);
               }}
             />
           </div>
           <div className="input-cont">
             <select
-              className="w-full bg-transparent text-slate-900 outline-0 placeholder:text-slate-300 dark:text-slate-50"
+              className="w-full bg-transparent text-slate-900 outline-0 placeholder:text-slate-300 dark:bg-[#0F172A] dark:text-slate-50"
               value={filterType}
               onChange={(e) => {
                 setFilterType(e.target.value);
-                setCurrentPage(1); // Reset to page 1 when filtering
+                setCurrentPage(1);
               }}
             >
               <option value="all">All Transactions</option>

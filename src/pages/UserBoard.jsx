@@ -1,6 +1,3 @@
-import React from "react";
-import CryptoList from "../components/CryptoList";
-import ResponsiveChart from "../components/ResponsiveChart";
 import Layout from "../components/Layout";
 import TransactionHistory from "../components/TranscationHistory";
 import Chart from "../components/Chart";
