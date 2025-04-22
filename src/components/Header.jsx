@@ -35,9 +35,9 @@ function Header({ setCollapsed, collapsed }) {
       <div className="flex items-center gap-x-3">
         <button size="icon" onClick={toggleTheme}>
           {theme === "dark" ? (
-            <Sun className="dark:hover:text-slate-300; flex h-10 w-fit flex-shrink-0 items-center justify-center gap-x-2 rounded-lg p-2 transition-colors dark:text-slate-400 dark:hover:bg-blue-950" />
+            <Sun className="h-10 w-fit rounded-lg p-2 transition-colors dark:text-slate-400 dark:hover:bg-blue-950 dark:hover:text-slate-300" />
           ) : (
-            <Moon className="flex h-10 w-fit flex-shrink-0 items-center justify-center gap-x-2 rounded-lg p-2 text-slate-400 transition-colors hover:bg-blue-50 hover:text-slate-500 dark:block" />
+            <Moon className="h-10 w-fit rounded-lg p-2 text-slate-400 transition-colors hover:bg-blue-50 hover:text-slate-500 dark:block" />
           )}
         </button>
 
