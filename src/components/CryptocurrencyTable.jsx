@@ -83,7 +83,7 @@ const CryptocurrencyTable = () => {
                     <div className="h-6 w-6 flex-shrink-0 sm:h-7 sm:w-7 md:h-8 md:w-8">
                       <img
                         className="h-6 w-6 rounded-full sm:h-7 sm:w-7 md:h-8 md:w-8"
-                        src={coin.image}
+                        src={`../${coin.image}`}
                         alt={coin.name}
                       />
                     </div>
