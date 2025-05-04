@@ -4,8 +4,6 @@ export const fetchCoins = async () => {
   return data;
 };
 
-// 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
-
 export const fetchPrices = async () => {
   try {
     const response = await fetch(
