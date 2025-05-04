@@ -1,6 +1,6 @@
 function Subscribe() {
   return (
-    <div className="mx-2 mt-40 flex flex-col items-center gap-3 rounded-lg bg-violet-950 p-5 font-jost sm:w-[50%] md:w-[40%] lg:w-[400px]">
+    <div className="mx-2 mt-20 flex flex-col items-center gap-3 rounded-lg bg-violet-950 p-5 font-jost sm:w-[50%] md:w-[40%] lg:w-[400px]">
       <p className="font-poppins text-lg font-bold tracking-wide">Subscribe</p>
       <span className="font-extralight tracking-wide">
         Join the hundreds of teams using our services, subscribe to get

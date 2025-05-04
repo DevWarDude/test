@@ -3,6 +3,7 @@ import Header from "../homeLayout/Header";
 import TopLayout from "../homeLayout/TopLayout";
 import BottomLayout from "../homeLayout/BottomLayout";
 import Footer from "../homeLayout/Footer";
+import FAQs from "../homeLayout/FAQs";
 
 function HomePage() {
   return (
@@ -11,6 +12,7 @@ function HomePage() {
       <TopLayout />
       <Activities />
       <BottomLayout />
+      <FAQs />
       <Footer />
     </div>
   );

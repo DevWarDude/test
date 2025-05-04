@@ -1,8 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchCoins } from "../service/cryptoApi";
 import { ClipLoader, RingLoader } from "react-spinners";
+import { useContext } from "react";
+import { PaymentContext } from "../contexts/PaymentContext";
 
 const CryptocurrencyTable = () => {
+  const { setSelectedCrypto, setShowPaymentForm } = useContext(PaymentContext);
+
+  function handleEvent(symbol) {
+    setSelectedCrypto(symbol.toUpperCase());
+    setShowPaymentForm((is) => !is);
+  }
+
   const {
     data: coins,
     isLoading,
@@ -15,9 +24,15 @@ const CryptocurrencyTable = () => {
 
   if (isLoading)
     return (
-      <div className="mt-16 flex w-[100%] items-center justify-center">
-        <ClipLoader />
-      </div>
+      <>
+        <div className="mt-16 flex w-[100%] items-center justify-center dark:hidden">
+          <ClipLoader />
+        </div>
+
+        <div className="mt-16 flex w-[100%] items-center justify-center">
+          <ClipLoader color="white" />
+        </div>
+      </>
     );
 
   if (error) return <p>Error: {error.message}</p>;
@@ -53,11 +68,12 @@ const CryptocurrencyTable = () => {
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200 bg-white dark:divide-slate-700 dark:bg-inherit dark:text-slate-100">
+          <tbody className="divide-y divide-gray-200 bg-gray-50 bg-opacity-60 dark:divide-slate-700 dark:bg-inherit dark:text-slate-100">
             {coins.map((coin, index) => (
               <tr
                 key={coin.id}
-                className="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800"
+                className="cursor-pointer hover:bg-white hover:bg-opacity-20 dark:hover:bg-gray-800"
+                onClick={() => handleEvent(coin.symbol)}
               >
                 <td className="whitespace-nowrap px-2 py-4 text-sm sm:px-3 md:px-4">
                   {index + 1}

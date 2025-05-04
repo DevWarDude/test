@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import toast from "react-hot-toast";
-import { supabase } from "../service/supabase";
+import { supabase } from "../service/supabaseClient";
 import ErrorComponent from "../components/ErrorComponent";
 
 function Login() {

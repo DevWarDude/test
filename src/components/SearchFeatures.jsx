@@ -1,7 +1,7 @@
 import { wallets } from "../data/wallets";
 import { WalletContext } from "../contexts/WalletContext";
 import { useContext } from "react";
-import Wallet from "../pages/Wallet";
+import Wallet from "./Wallet";
 
 export default function SearchFeature() {
   const { searchTerm, setSearchTerm, currentWallet, handleGetWallet } =
@@ -48,7 +48,7 @@ export default function SearchFeature() {
                 <img
                   src={`../${item.img}`}
                   alt=""
-                  className="w-[70px] rounded-xl sm:w-[40px] md:w-[60px]"
+                  className="w-[55px] rounded-xl sm:w-[40px] md:w-[60px]"
                 />
                 <div className="text-center font-semibold">{item.name}</div>
               </div>

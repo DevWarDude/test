@@ -1,13 +1,17 @@
 export const fetchCoins = async () => {
-  const res = await fetch(
-    "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=200&page=1&sparkline=false",
-  );
-
-  if (!res.ok) {
-    throw new Error("Network response was not ok");
-  }
-
-  const data = await res.json();
-
+  const response = await fetch("https://coincove.vercel.app/api/coins");
+  const data = await response.json();
   return data;
+};
+
+export const fetchPrices = async () => {
+  try {
+    const response = await fetch(
+      "https://coincove.vercel.app/api/top50-prices",
+    );
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching prices:", error);
+    return {};
+  }
 };

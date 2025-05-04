@@ -1,6 +1,6 @@
 import Header from "../homeLayout/Header";
 import { FaArrowAltCircleLeft } from "react-icons/fa";
-import PopupForm from "../components/PopupForm";
+import PopupForm from "./PopupForm";
 import { useContext } from "react";
 import { WalletContext } from "../contexts/WalletContext";
 

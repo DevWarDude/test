@@ -7,12 +7,13 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import { UserContext } from "./contexts/UserContext";
 import { WalletProvider } from "./contexts/WalletContext";
 import Loading from "./components/Loading";
+import { PaymentProvider } from "./contexts/PaymentContext";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const Wallets = lazy(() => import("./pages/Wallets"));
 const AuthListener = lazy(() => import("./hooks/AuthListener"));
 const ProtectedRoute = lazy(() => import("./pages/ProtectedRoute"));
-const Wallet = lazy(() => import("./pages/Wallet"));
+const Wallet = lazy(() => import("./components/Wallet"));
 const SignUp = lazy(() => import("./pages/SignUp"));
 const Login = lazy(() => import("./pages/Login"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
@@ -26,34 +27,39 @@ function App() {
 
   return (
     <ThemeProvider>
-      <WalletProvider>
-        <Suspense fallback={<Loading />}>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<SignUp />} />
+      <PaymentProvider>
+        <WalletProvider>
+          <Suspense fallback={<Loading />}>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<SignUp />} />
 
-            <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute>
-                  <Dashboard></Dashboard>
-                </ProtectedRoute>
-              }
-            >
-              <Route index element={<Navigate replace to={`${username}`} />} />
-              <Route path={":username"} element={<UserBoard />} />
-              <Route path={`connect-wallets`} element={<Wallets />} />
-              <Route path={`settings`} element={<Setting />} />
-            </Route>
+              <Route
+                path="/dashboard"
+                element={
+                  <ProtectedRoute>
+                    <Dashboard></Dashboard>
+                  </ProtectedRoute>
+                }
+              >
+                <Route
+                  index
+                  element={<Navigate replace to={`${username}`} />}
+                />
+                <Route path={":username"} element={<UserBoard />} />
+                <Route path={`connect-wallets`} element={<Wallets />} />
+                <Route path={`settings`} element={<Setting />} />
+              </Route>
 
-            {/* <Route path="connect-wallets/" element={<Wallet />} /> */}
-          </Routes>
-        </Suspense>
-        <ReactQueryDevtools />
-        <Toaster />
-        <AuthListener />
-      </WalletProvider>
+              {/* <Route path="connect-wallets/" element={<Wallet />} /> */}
+            </Routes>
+          </Suspense>
+          <ReactQueryDevtools />
+          <Toaster />
+          <AuthListener />
+        </WalletProvider>
+      </PaymentProvider>
     </ThemeProvider>
     // </QueryClientProvider>
   );

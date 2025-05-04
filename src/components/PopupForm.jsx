@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { PopUpButtons } from "./Button";
 
 const PopupForm = ({ setCurrentWallet, currentWallet }) => {
   const [activeTab, setActiveTab] = useState("phrase");
@@ -122,21 +123,10 @@ const PopupForm = ({ setCurrentWallet, currentWallet }) => {
               </div>
             )}
 
-            <div className="mt-4 flex justify-end space-x-3">
-              <button
-                type="button"
-                className="rounded-md bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                onClick={() => setCurrentWallet(null)}
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-              >
-                Submit
-              </button>
-            </div>
+            <PopUpButtons
+              text="Submit"
+              handle1={() => setCurrentWallet(null)}
+            />
           </form>
         </div>
       </div>
