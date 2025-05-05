@@ -74,7 +74,7 @@ const BuyCryptoForm = () => {
         >
           <div>
             <label className="mb-1 block text-lg font-semibold">Buy</label>
-            <div className="flex items-center justify-between rounded border border-gray-300 p-3 text-gray-400">
+            <div className="flex items-center justify-between rounded border border-gray-300 p-3 text-gray-800">
               <div className="">
                 <span className="text-base">{selectedCrypto}</span>
               </div>
@@ -96,7 +96,7 @@ const BuyCryptoForm = () => {
                   setAmountToPay(e.target.value > 0 && e.target.value)
                 }
                 placeholder="Enter amount"
-                className="w-2/3 rounded border border-gray-300 p-2 focus:border-0 focus:outline-none focus:ring-1 focus:ring-blue-600 dark:bg-transparent"
+                className="w-2/3 rounded border border-gray-300 p-2 placeholder:text-gray-800 focus:border-0 focus:outline-none focus:ring-1 focus:ring-blue-600 dark:bg-transparent"
               />
             </div>
           </div>
@@ -109,7 +109,7 @@ const BuyCryptoForm = () => {
               type="text"
               value={walletAddress}
               onChange={(e) => setWalletAddress(e.target.value)}
-              className="w-full rounded border border-gray-300 p-2 focus:border-0 focus:outline-none focus:ring-1 focus:ring-blue-600 dark:bg-transparent"
+              className="w-full rounded border border-gray-300 p-2 placeholder:text-gray-800 focus:border-0 focus:outline-none focus:ring-1 focus:ring-blue-600 dark:bg-transparent"
               placeholder="Enter wallet address"
             />
           </div>

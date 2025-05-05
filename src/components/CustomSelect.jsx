@@ -14,14 +14,14 @@ const CustomOption = ({ innerProps, data }) => (
     className="flex cursor-pointer items-center p-2 hover:bg-gray-100 dark:bg-transparent"
   >
     <img src={`../${data.icon}`} alt={data.label} className="mr-2 h-5 w-5" />
-    <span className="text-sm font-medium text-gray-400">{data.label}</span>
+    <span className="text-sm font-medium text-gray-800">{data.label}</span>
   </div>
 );
 
 const CustomSingleValue = ({ data }) => (
   <div className="absolute flex items-center justify-center dark:bg-transparent">
     <img src={`../${data.icon}`} alt={data.label} className="mr-2 h-5 w-5" />
-    <span className="text-sm font-medium text-gray-400">{data.label}</span>
+    <span className="text-sm font-medium text-gray-800">{data.label}</span>
   </div>
 );
 
