@@ -94,7 +94,7 @@ const TransactionHistory = () => {
             <input
               type="text"
               placeholder="Search descriptions..."
-              className="w-full bg-transparent text-slate-900 outline-0 placeholder:text-slate-300 dark:text-slate-50"
+              className="w-full bg-transparent text-slate-900 outline-0 placeholder:text-slate-500 dark:text-slate-50 dark:placeholder:text-slate-50"
               value={searchQuery}
               onChange={(e) => {
                 setSearchQuery(e.target.value);

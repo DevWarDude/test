@@ -20,7 +20,7 @@ import React from "react";
 
 function FAQs() {
   return (
-    <div className="mx-auto mt-14 max-w-3xl p-6 sm:mx-20">
+    <div className="mx-auto mt-14 flex flex-col items-center justify-center p-6 sm:mx-20">
       <h2 className="mb-6 text-2xl font-bold">FAQs</h2>
       <div className="space-y-4">
         {faqs.map((faq, index) => (
@@ -40,7 +40,7 @@ function FAQs() {
                   animate={{ opacity: 1, height: "auto" }}
                   exit={{ opacity: 0, height: 0 }}
                   transition={{ duration: 0.2 }}
-                  className="overflow-hidden px-4 pb-4 text-gray-400"
+                  className="overflow-hidden text-wrap px-4 pb-4 text-gray-400"
                 >
                   {faq.answer}
                 </Disclosure.Panel>

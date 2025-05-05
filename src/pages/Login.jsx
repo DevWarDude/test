@@ -44,7 +44,7 @@ function Login() {
 
   return (
     <div className="flex min-h-[100vh] items-center justify-center bg-gray-50 p-4 sm:p-6">
-      <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-sm sm:max-w-lg sm:p-8 md:max-w-xl md:p-10 lg:max-w-2xl lg:p-12">
+      <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-sm sm:w-[500px] sm:p-8">
         <header className="flex flex-col">
           <div className="flex items-center gap-2">
             <img
@@ -57,17 +57,17 @@ function Login() {
             </h1>
           </div>
           <div className="mt-4 flex flex-col sm:mt-6">
-            <p className="text-2xl font-semibold text-slate-700 sm:text-3xl md:text-4xl">
+            <p className="text-2xl font-semibold text-slate-700 sm:text-2xl md:text-3xl">
               Login
             </p>
-            <span className="text-lg tracking-wide opacity-70 sm:text-xl">
+            <span className="mt-2 text-lg tracking-wide opacity-70 sm:text-xl">
               Please enter your credentials
             </span>
           </div>
         </header>
 
         <form
-          className="mt-5 flex flex-col gap-5 sm:mt-6 sm:gap-6 md:mt-8 md:gap-7"
+          className="mt-5 flex flex-col gap-5 sm:mt-6 sm:gap-6 md:mt-8 md:gap-5"
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="flex flex-col gap-1 sm:gap-2">

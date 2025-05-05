@@ -16,24 +16,20 @@ function TopLayout() {
 
   return (
     <div className="flex flex-col items-center justify-center sm:mx-5 sm:mt-16">
-      <div className="flex flex-col items-center justify-center sm:flex-row-reverse sm:gap-5 sm:text-start">
-        <img
-          src="download.png"
-          className="w-[50%] sm:w-[40%] md:w-[30%]"
-          alt=""
-        />
-        <div className="flex flex-col items-center justify-center sm:items-start sm:gap-2 md:gap-4">
+      <div className="flex flex-col items-center justify-center md:flex-row-reverse md:gap-5 md:text-start">
+        <img src="download.png" className="w-[50%] md:w-[40%]" alt="" />
+        <div className="flex flex-col items-center justify-center sm:gap-2 md:items-start md:gap-4">
           <div className="flex w-fit items-center">
             <span className="w-fit rounded-l-full bg-gradient-to-r from-blue-500 to-purple-400 px-4 py-1 text-white">
               WEB3.0
             </span>
             <div className="rounded-r-full bg-purple-200 px-4 py-1">
-              <span className="bg-gradient-to-r from-purple-700 to-red-500 bg-clip-text text-base font-bold text-transparent">
+              <span className="text-nowrap bg-gradient-to-r from-purple-700 to-red-500 bg-clip-text text-base font-bold text-transparent">
                 PEOPLE-POWERED NETWORKS.
               </span>
             </div>
           </div>
-          <div className="item-center mt-6 flex flex-col justify-center font-poppins text-3xl font-bold tracking-wider sm:items-start md:text-4xl">
+          <div className="item-center mt-6 flex flex-col justify-center font-poppins text-3xl font-bold tracking-wider md:items-start md:text-4xl">
             <h1 className="bg-gradient-to-r from-blue-500 to-emerald-100 bg-clip-text text-transparent">
               See The Future.
             </h1>
