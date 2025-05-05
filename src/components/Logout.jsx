@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { supabase } from "../service/supabaseClient";
+import { supabase } from "../service/supabase";
 
 export default function Logout({ children, collapsed }) {
   const navigate = useNavigate();
