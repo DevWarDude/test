@@ -26,6 +26,9 @@ function Login() {
       });
 
       if (error) throw error;
+      if (error.message.includes("Invalid login credentials")) {
+        toast.error("Wrong email or password");
+      }
       return data;
     },
     onSuccess: async () => {

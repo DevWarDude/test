@@ -10,7 +10,7 @@ export default function AuthListener() {
       if (event === "SIGNED_IN") navigate("/dashboard");
       if (event === "SIGNED_OUT") navigate("/login");
     });
-  }, []);
+  }, [navigate]);
 
   return null; // This component doesn’t render anything
 }

@@ -1,7 +1,5 @@
 export const fetchCoins = async () => {
-  const response = await fetch(
-    "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&per_page=100&page=1",
-  );
+  const response = await fetch("t");
   const data = await response.json();
   return data;
 };
@@ -19,16 +17,12 @@ export const fetchCoins = async () => {
 // };
 
 export const fetchPrices = async () => {
-  const marketResponse = await fetch(
-    "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1",
-  );
+  const marketResponse = await fetch("y");
   const top50Coins = await marketResponse.json();
 
   const coinIds = top50Coins.map((coin) => coin.id).join(",");
 
-  const priceResponse = await fetch(
-    `https://api.coingecko.com/api/v3/simple/price?ids=${coinIds}&vs_currencies=usd`,
-  );
+  const priceResponse = await fetch(`h`);
   const priceData = await priceResponse.json();
 
   const prices = {};
