@@ -10,6 +10,7 @@ import ErrorComponent from "../components/ErrorComponent";
 function Login() {
   const [isOnline] = useState(navigator.onLine);
   const navigate = useNavigate();
+  const [loginError, setLoginError] = useState("");
   const queryClient = useQueryClient();
 
   const {
@@ -20,12 +21,15 @@ function Login() {
 
   const { mutate, isPending } = useMutation({
     mutationFn: async ({ email, password }) => {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+      const { data, error: loginError } =
+        await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
 
-      if (error) throw error;
+      if (loginError) throw loginError;
+      console.log(loginError);
+
       return data;
     },
     onSuccess: async () => {
@@ -34,7 +38,9 @@ function Login() {
       navigate("/dashboard");
     },
     onError: (error) => {
-      toast.error(error);
+      console.error("Login error:", error);
+      toast.error(error.message || "Login failed. Please try again.");
+      setLoginError(error.message);
     },
   });
 
@@ -93,7 +99,6 @@ function Login() {
               </span>
             )}
           </div>
-
           <div className="flex flex-col gap-1 sm:gap-2">
             <label htmlFor="password" className="label text-sm sm:text-base">
               Password
@@ -111,13 +116,18 @@ function Login() {
               </span>
             )}
           </div>
-
           {(errors.root?.network || errors.root?.credentials) && (
             <div className="text-red-600">
               <p>
                 {errors.root.network?.message ||
                   errors.root.credentials?.message}
               </p>
+            </div>
+          )}
+
+          {loginError && (
+            <div className="text-red-600">
+              <p>{loginError}</p>
             </div>
           )}
 
