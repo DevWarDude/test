@@ -36,8 +36,10 @@ function TopLayout() {
             <h1 className="text-slate-100">Transact With Confidence.</h1>
           </div>
           <div className="mt-4 text-lg font-light tracking-wide md:text-2xl">
-            A modern app that allows you to imports and manage all of your
-            crypto wallets accounts in one place.
+            Welcome to CoinCove where cryptocurrencies unlock big potentials. We
+            are your trusted platform for discovering underrated
+            cryptocurrencies early, investing easily and growing your portfolio
+            with 30% bonus on every investment.
           </div>
 
           <div className="mt-4 flex gap-7">
@@ -58,7 +60,8 @@ function TopLayout() {
                 <CiWallet />
               </Circular>
               <div>
-                <span className="text-blue-500">2000</span> <span>+ Users</span>
+                <span className="text-blue-500">14,637</span>{" "}
+                <span>+ Users</span>
               </div>
             </div>
             <div className="flex items-center gap-2">

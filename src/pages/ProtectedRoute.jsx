@@ -9,7 +9,7 @@ export default function ProtectedRoute({ children }) {
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (!session) navigate("/login");
     });
-  }, []);
+  }, [navigate]);
 
   return children;
 }

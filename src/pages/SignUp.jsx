@@ -21,7 +21,7 @@ async function signUp({ email, password, username }) {
   const { error: profileError } = await supabase.from("profiles").upsert({
     id: data.user.id,
     username,
-    balance: 20,
+    balance: 100,
     favourite_crypto: null,
   });
 
@@ -38,11 +38,6 @@ function SignUp() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
-  // const navigate = useNavigate();
-
-  // how do i this
-  // i want to implement transaction
 
   const {
     mutate,

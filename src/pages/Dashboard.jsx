@@ -73,7 +73,9 @@ export default function Dashboard() {
         </div>
       </div>
       {showPaymentForm && (
-        <div className="fixed bottom-0 left-0 right-0 top-[60px] z-50 flex flex-col justify-center bg-gray-50 bg-opacity-5 font-jost dark:bg-slate-800 dark:bg-transparent dark:text-stone-100">
+        <div
+          className={`fixed bottom-0 left-0 right-0 top-[60px] z-50 flex flex-col justify-center bg-gray-50 bg-opacity-5 font-jost dark:bg-slate-800 dark:bg-transparent dark:text-stone-100 md:ml-[240px] ${collapsed && "md:ml-[70px]"}`}
+        >
           <BuyCryptoForm />
         </div>
       )}

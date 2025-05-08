@@ -1,5 +1,4 @@
-import { CiHome, CiMoneyBill } from "react-icons/ci";
-import { AiOutlineProduct } from "react-icons/ai";
+import { CiHome } from "react-icons/ci";
 import { CiBank } from "react-icons/ci";
 
 import { IoSettingsOutline } from "react-icons/io5";

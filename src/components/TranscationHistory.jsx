@@ -7,8 +7,6 @@ const TransactionHistory = () => {
   const isoDate = user.created_at;
   const formattedDate = format(new Date(isoDate), "MMMM dd, yyyy");
 
-  // console.log();
-
   const allTransactions = [
     {
       id: 1,
@@ -56,8 +54,7 @@ const TransactionHistory = () => {
 
   // State for pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const transactionsPerPage = 3; // Show 3 transactions per page
-
+  const transactionsPerPage = 3;
   // State for filters
   const [filterType, setFilterType] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");

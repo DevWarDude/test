@@ -1,19 +1,10 @@
-import { Link, NavLink } from "react-router";
+import { Link } from "react-router";
 import { navBarLinks } from "../data/navBarLinks";
 import { MdLogout } from "react-icons/md";
-
-// import { cn } from "@/utils/cn";
 
 import PropTypes from "prop-types";
 import { forwardRef } from "react";
 import Logout from "./Logout";
-
-{
-  /* 
-in my superbase account 
-  
-  */
-}
 
 export const SideBar = forwardRef(({ collapsed, setCollapsed }, ref) => {
   return (

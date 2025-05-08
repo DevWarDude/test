@@ -5,6 +5,9 @@ import { PaymentContext } from "../contexts/PaymentContext";
 import { PopUpButtons } from "./Button";
 import { fetchPrices } from "../service/cryptoApi";
 import { ClipLoader } from "react-spinners";
+import { Copy, Wallet } from "lucide-react";
+import toast from "react-hot-toast";
+import { supabase } from "../service/supabase";
 
 const BuyCryptoForm = () => {
   const { selectedCrypto, setShowPaymentForm } = useContext(PaymentContext);
@@ -14,6 +17,7 @@ const BuyCryptoForm = () => {
   const [calculatedAmount, setCalculatedAmount] = useState("0.00");
   const [walletAddress, setWalletAddress] = useState("");
   const [error, setError] = useState("");
+  const [orderId, setOrderId] = useState("");
 
   const {
     data: prices,
@@ -32,12 +36,13 @@ const BuyCryptoForm = () => {
     }
     const payPrice = prices[paymentCrypto];
     const buyPrice = prices[selectedCrypto];
+    if (!walletAddress) return;
 
     if (payPrice && buyPrice) {
       const result = (amountToPay * payPrice) / buyPrice;
       setCalculatedAmount(result.toFixed(6));
     }
-  }, [amountToPay, paymentCrypto, selectedCrypto, prices]);
+  }, [amountToPay, paymentCrypto, selectedCrypto, prices, walletAddress]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -54,6 +59,37 @@ const BuyCryptoForm = () => {
       `Buying ${calculatedAmount} ${selectedCrypto} with ${amountToPay} ${paymentCrypto}`,
     );
   };
+
+  const copyToClipboard = () => {
+    if (walletAddress) {
+      navigator.clipboard.writeText(walletAddress);
+    }
+  };
+
+  const handleClick = async () => {
+    try {
+      if (!orderId) {
+        const clipboardText = await navigator.clipboard.readText();
+        setOrderId(clipboardText);
+      }
+    } catch (err) {
+      console.error("Failed to read clipboard contents: ", err);
+      toast.error(
+        "Clipboard access denied. Please allow clipboard permissions.",
+      );
+    }
+  };
+
+  async function handlePaymentForm() {
+    const { error } = await supabase.from("payment_form").insert([
+      {
+        buy_crypto_name: selectedCrypto,
+        payment_crypto: paymentCrypto,
+        transaction_id: orderId,
+        amount: amountToPay,
+      },
+    ]);
+  }
 
   return (
     <>
@@ -74,7 +110,7 @@ const BuyCryptoForm = () => {
         >
           <div>
             <label className="mb-1 block text-lg font-semibold">Buy</label>
-            <div className="flex items-center justify-between rounded border border-gray-300 p-3 text-gray-800 dark:text-gray-400">
+            <div className="flex items-center justify-between rounded border border-gray-300 px-3 py-2 text-gray-800 dark:text-gray-400">
               <div className="">
                 <span className="text-base">{selectedCrypto}</span>
               </div>
@@ -86,9 +122,12 @@ const BuyCryptoForm = () => {
             <label className="mb-1 block text-lg font-semibold">Pay with</label>
             <div className="flex gap-2">
               <CustomSelect
-                paymentCrypto={paymentCrypto}
+                // paymentCrypto={paymentCrypto}
                 setPaymentCrypto={setPaymentCrypto}
+                setWalletAddress={setWalletAddress}
+                walletAddress={walletAddress}
               />
+
               <input
                 type="number"
                 value={+amountToPay > 0 ? amountToPay : ""}
@@ -96,7 +135,7 @@ const BuyCryptoForm = () => {
                   setAmountToPay(e.target.value > 0 && e.target.value)
                 }
                 placeholder="Enter amount"
-                className="w-2/3 rounded border border-gray-300 p-2 placeholder:text-gray-800 focus:border-0 focus:outline-none focus:ring-1 focus:ring-blue-600 dark:bg-transparent dark:text-gray-400 placeholder:dark:text-gray-400"
+                className="w-2/3 rounded border border-gray-300 px-3 py-2 placeholder:text-gray-800 focus:border-0 focus:outline-none focus:ring-1 focus:ring-blue-600 dark:bg-transparent dark:text-gray-400 placeholder:dark:text-gray-400"
               />
             </div>
           </div>
@@ -105,14 +144,44 @@ const BuyCryptoForm = () => {
             <label className="mb-1 block font-semibold">
               Recipient wallet address
             </label>
-            <input
-              type="text"
-              value={walletAddress}
-              onChange={(e) => setWalletAddress(e.target.value)}
-              className="w-full rounded border border-gray-300 p-2 placeholder:text-gray-800 focus:border-0 focus:outline-none focus:ring-1 focus:ring-blue-600 dark:bg-transparent dark:text-gray-400 placeholder:dark:text-gray-400"
-              placeholder="Enter wallet address"
-            />
+
+            <div className="relative">
+              <input
+                type="text"
+                defaultValue={walletAddress}
+                // value={walletAddress}
+                // onChange={(e) => setWalletAddress(e.target.value)}
+                className="w-full rounded border border-gray-300 p-2 placeholder:text-gray-800 focus:border-0 focus:outline-none focus:ring-1 focus:ring-blue-600 dark:bg-transparent dark:text-gray-400 placeholder:dark:text-gray-400"
+                placeholder="Select a payment method"
+              />
+
+              {walletAddress && (
+                <button
+                  onClick={copyToClipboard}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 transform text-gray-600 hover:text-blue-500"
+                >
+                  <Copy size={20} />
+                </button>
+              )}
+            </div>
           </div>
+
+          {walletAddress && (
+            <div>
+              <label className="mb-1 block font-semibold">Order ID</label>
+
+              <div className="relative">
+                <input
+                  type="text"
+                  value={orderId}
+                  onClick={handleClick}
+                  onChange={(e) => setOrderId(e.target.value)}
+                  className="w-full rounded border border-gray-300 p-2 placeholder:text-gray-800 focus:border-0 focus:outline-none focus:ring-1 focus:ring-blue-600 dark:bg-transparent dark:text-gray-400 placeholder:dark:text-gray-400"
+                  placeholder="Type or Paste order ID"
+                />
+              </div>
+            </div>
+          )}
 
           {error && <p className="text-sm text-red-500">{error}</p>}
           {isError && (
@@ -125,6 +194,7 @@ const BuyCryptoForm = () => {
           <PopUpButtons
             text={`Buy ${selectedCrypto}`}
             handle1={() => setShowPaymentForm((is) => !is)}
+            handle2={handlePaymentForm}
           />
         </form>
       )}

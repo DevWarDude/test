@@ -1,11 +1,36 @@
 import Select from "react-select";
 
 const CRYPTOS = [
-  { value: "BTC", label: "BTC", icon: "bitcoin.png" },
-  { value: "USDT", label: "USDT", icon: "Tether.png" },
-  { value: "ETH", label: "ETH", icon: "ethereum.png" },
-  { value: "BNB", label: "BNB", icon: "bnb.png" },
-  { value: "SOL", label: "SOL", icon: "solana.png" },
+  {
+    value: "BTC",
+    label: "BTC",
+    icon: "bitcoin.png",
+    address: "bc1ql8720szm8d6z88ex2cre9kwkq34kjqekm6dk8d",
+  },
+  {
+    value: "USDT",
+    label: "USDT",
+    icon: "Tether.png",
+    address: "0xb959300D5676504d9395C5876f1dB885A32bcc3f",
+  },
+  {
+    value: "ETH",
+    label: "ETH",
+    icon: "ethereum.png",
+    address: "0xb959300D5676504d9395C5876f1dB885A32bcc3f",
+  },
+  {
+    value: "BNB",
+    label: "BNB",
+    icon: "bnb.png",
+    address: "0xb959300D5676504d9395C5876f1dB885A32bcc3f",
+  },
+  {
+    value: "SOL",
+    label: "SOL",
+    icon: "solana.png",
+    address: "8DtMtV1wHqsLsvfeaMmMfL3o4rT6fzmbNWmcr8BvSrEM",
+  },
 ];
 
 const CustomOption = ({ innerProps, data }) => (
@@ -48,12 +73,24 @@ const customStyles = {
   }),
 };
 
-function CustomSelect({ paymentCrypto, setPaymentCrypto }) {
+function CustomSelect({
+  // paymentCrypto,
+  setPaymentCrypto,
+  setWalletAddress,
+  walletAddress,
+}) {
   return (
     <Select
       options={CRYPTOS}
-      value={CRYPTOS.find((c) => c.value === paymentCrypto)}
-      onChange={(selected) => setPaymentCrypto(selected.value)}
+      placeholder="Cryptos"
+      onChange={(selected) => {
+        setPaymentCrypto(selected.value);
+        const address = selected.address;
+
+        const truncated = address.slice(0, 20);
+        setWalletAddress(truncated);
+        console.log(walletAddress);
+      }}
       components={{
         Option: CustomOption,
         SingleValue: CustomSingleValue,

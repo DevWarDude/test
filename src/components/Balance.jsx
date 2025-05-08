@@ -1,4 +1,3 @@
-import { Minus, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 
 function Balance({ user }) {
