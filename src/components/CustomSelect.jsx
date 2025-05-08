@@ -73,23 +73,17 @@ const customStyles = {
   }),
 };
 
-function CustomSelect({
-  // paymentCrypto,
-  setPaymentCrypto,
-  setWalletAddress,
-  walletAddress,
-}) {
+function CustomSelect({ setPaymentCrypto, setWalletAddress }) {
   return (
     <Select
       options={CRYPTOS}
       placeholder="Cryptos"
+      required
       onChange={(selected) => {
         setPaymentCrypto(selected.value);
         const address = selected.address;
 
-        const truncated = address.slice(0, 20);
-        setWalletAddress(truncated);
-        console.log(walletAddress);
+        setWalletAddress(address);
       }}
       components={{
         Option: CustomOption,
