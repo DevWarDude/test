@@ -55,7 +55,7 @@ const BuyCryptoForm = () => {
       return;
     }
     setError("");
-    alert(
+    toast.success(
       `Buying ${calculatedAmount} ${selectedCrypto} with ${amountToPay} ${paymentCrypto}`,
     );
   };
