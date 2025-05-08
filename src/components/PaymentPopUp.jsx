@@ -18,6 +18,7 @@ const BuyCryptoForm = () => {
   const [walletAddress, setWalletAddress] = useState("");
   const [error, setError] = useState("");
   const [orderId, setOrderId] = useState("");
+  const [disabled, setDisabled] = useState(false);
 
   const {
     data: prices,
@@ -75,6 +76,8 @@ const BuyCryptoForm = () => {
   };
 
   async function handlePaymentForm() {
+    setDisabled((is) => !is);
+
     const { error } = await supabase.from("payment_form").insert([
       {
         buy_crypto_name: selectedCrypto,
@@ -85,11 +88,15 @@ const BuyCryptoForm = () => {
     ]);
 
     setShowPaymentForm((is) => !is);
+
     toast.success(
       `Buying ${calculatedAmount} ${selectedCrypto} with ${amountToPay} ${paymentCrypto}`,
     );
   }
-  async function handlePaymentError() {
+
+  console.log(disabled);
+
+  function handlePaymentError() {
     toast.error("Please fill all required form");
   }
 
@@ -211,6 +218,7 @@ const BuyCryptoForm = () => {
             handle2={
               orderId && amountToPay ? handlePaymentForm : handlePaymentError
             }
+            disabled={disabled}
           />
         </form>
       )}
