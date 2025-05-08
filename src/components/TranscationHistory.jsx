@@ -11,7 +11,7 @@ const TransactionHistory = () => {
     {
       id: 1,
       type: "deposit",
-      amount: 20,
+      amount: 100,
       date: formattedDate,
       description: "Sign up bonus",
     },
