@@ -7,26 +7,56 @@ import toast from "react-hot-toast";
 import { supabase } from "../service/supabase";
 import ErrorComponent from "../components/ErrorComponent";
 
-async function signUp({ email, password, username }) {
-  const { data, error: signupError } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      data: { username },
-    },
-  });
+const generateReferralCode = () => {
+  return Math.random().toString(36).substring(2, 10).toUpperCase();
+};
 
-  if (signupError) throw signupError;
+const checkReferralCode = async (code) => {
+  const cleanCode = code.trim().toUpperCase();
 
-  const { error: profileError } = await supabase.from("profiles").upsert({
-    id: data.user.id,
-    username,
-    balance: 100,
-    favourite_crypto: null,
-  });
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("my_referral_code")
+    .eq("my_referral_code", cleanCode)
+    .maybeSingle();
 
-  if (profileError) throw profileError;
-  return data;
+  if (error) {
+    console.error("Error checking referral code:", error);
+    return false;
+  }
+
+  return !!data;
+};
+
+async function signUp({ email, password, username, referral_from_friend }) {
+  const validRefCode = await checkReferralCode(referral_from_friend);
+
+  if (referral_from_friend === "") {
+    const { data, error: signupError } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { username, referral_from_friend },
+      },
+    });
+
+    if (signupError) throw signupError;
+
+    const { error: profileError } = await supabase.from("profiles").upsert({
+      id: data.user.id,
+      username,
+      balance: 100,
+      favourite_crypto: null,
+      my_referral_code: generateReferralCode(),
+      referral_from_friend: validRefCode ? referral_from_friend : null,
+    });
+
+    if (profileError) throw profileError;
+
+    return data;
+  }
+
+  if (referral_from_friend !== "") throw new Error("Wrong Referral code");
 }
 
 function SignUp() {
@@ -150,6 +180,35 @@ function SignUp() {
             )}
           </div>
 
+          <div className="flex flex-col gap-1 sm:gap-2">
+            <label
+              htmlFor="referral_from_friend"
+              className="label text-sm sm:text-base"
+            >
+              Referral Code <span className="opacity-50">Optional</span>
+            </label>
+            <input
+              // value={referralCode}
+              // onChange={(e) => setReferralCode(() => e.target.value)}
+              // onBlur={handleReferralCodeCheck}
+              type="referral_from_friend"
+              {...register("referral_from_friend", {
+                minLength: {
+                  value: 6,
+                  message: "Referral must be at least 6 characters",
+                },
+              })}
+              id="referral_from_friend"
+              placeholder="Enter your referral code"
+              className="input text-sm sm:text-base"
+            />
+            {errors.referral_from_friend && (
+              <span className="text-sm text-red-600 sm:text-base">
+                {errors.referral_from_friend.message}
+              </span>
+            )}
+          </div>
+
           <button
             className="mt-3 rounded-lg bg-[#4893ff] p-2 text-lg font-semibold text-white transition-colors hover:bg-[#3a7bd5] disabled:bg-blue-400 sm:mt-4 sm:p-3 sm:text-xl md:mt-5"
             disabled={isPending}
@@ -181,3 +240,105 @@ function SignUp() {
 }
 
 export default SignUp;
+
+// import { useState } from "react";
+// import { supabase } from "../service/supabase";
+// import { createClient } from "@supabase/supabase-js";
+
+// Initialize Supabase client (do this once in a separate config file)
+// const supabase = createClient(
+//   process.env.REACT_APP_SUPABASE_URL,
+//   process.env.REACT_APP_SUPABASE_KEY,
+// );
+
+// export default function SignUp() {
+//   const [email, setEmail] = useState("");
+//   const [password, setPassword] = useState("");
+//   const [loading, setLoading] = useState(false);
+//   const [referralCode, setReferralCode] = useState("");
+
+//   // Function to generate random referral code
+
+//   // Function to assign unique referral code to user
+//   const assignReferralCode = async (userId) => {
+//     let isUnique = false;
+//     let code;
+
+//     // Keep generating until we get a unique code
+//     while (!isUnique) {
+//       code = generateReferralCode();
+
+//       const { data } = await supabase
+//         .from("users")
+//         .select("id")
+//         .eq("my_referral_code", code)
+//         .single();
+
+//       // If no data found, code is unique
+//       if (!data) isUnique = true;
+//     }
+
+//     // Update user with the new unique code
+//     const { error } = await supabase
+//       .from("users")
+//       .update({ referral_code: code })
+//       .eq("id", userId);
+
+//     if (error) throw error;
+
+//     return code;
+//   };
+
+//   const handleSignUp = async (e) => {
+//     e.preventDefault();
+//     setLoading(true);
+
+//     try {
+//       // 1. Sign up the user
+//       const { user, error } = await supabase.auth.signUp({ email, password });
+
+//       if (error) throw error;
+
+//       // 2. Generate and assign referral code
+//       const code = await assignReferralCode(user.id);
+//       setReferralCode(code);
+
+//       alert(`Sign up successful! Your referral code: ${code}`);
+//     } catch (error) {
+//       alert(error.message);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   return (
+//     <form onSubmit={handleSignUp}>
+//       <input
+//         type="email"
+//         value={email}
+//         onChange={(e) => setEmail(e.target.value)}
+//         placeholder="Email"
+//         required
+//       />
+//       <input
+//         type="password"
+//         value={password}
+//         onChange={(e) => setPassword(e.target.value)}
+//         placeholder="Password"
+//         required
+//       />
+//       <button type="submit" disabled={loading}>
+//         {loading ? "Loading..." : "Sign Up"}
+//       </button>
+
+//       {referralCode && (
+//         <div>
+//           <p>Your Referral Code: {referralCode}</p>
+//           <button onClick={() => navigator.clipboard.writeText(referralCode)}>
+//             Copy to Clipboard
+//           </button>
+//         </div>
+//       )}
+//     </form>
+//   );
+// }
